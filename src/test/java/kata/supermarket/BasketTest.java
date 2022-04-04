@@ -45,7 +45,9 @@ class BasketTest {
 
     static Stream<Arguments> basketBuyTwoForOnePoundTotal() {
         return Stream.of(
-                twoForOnePoundTwoItems()
+                twoForOnePoundTwoItems(),
+                twoForOnePoundThreeItems(),
+                twoForOnePoundFiveItems()
         );
     }
 
@@ -73,8 +75,18 @@ class BasketTest {
     }
 
     private static Arguments twoForOnePoundTwoItems() {
-        return Arguments.of("one product two items priced per unit", "1.00",
+        return Arguments.of("two for one pound two items", "1.00",
                 Arrays.asList(aCanOfBeans(), aCanOfBeans()));
+    }
+
+    private static Arguments twoForOnePoundThreeItems() {
+        return Arguments.of("two for one pound two items three items", "1.65",
+                Arrays.asList(aCanOfBeans(), aCanOfBeans(), aCanOfBeans()));
+    }
+
+    private static Arguments twoForOnePoundFiveItems() {
+        return Arguments.of("two for one pound two items five items", "2.65",
+                Arrays.asList(aCanOfBeans(), aCanOfBeans(), aCanOfBeans(), aCanOfBeans(), aCanOfBeans()));
     }
 
     private static Item aPintOfMilk() {
