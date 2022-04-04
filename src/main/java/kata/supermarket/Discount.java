@@ -7,6 +7,7 @@ public interface Discount {
 
     /**
      * List of discount items
+     *
      * @param items list of Item
      * @return none
      */
