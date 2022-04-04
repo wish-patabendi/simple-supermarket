@@ -1,3 +1,7 @@
 # Notes
 
-Please add here any notes, assumptions and design decisions that might help us understand your thought process.
+![Image description](src/main/resources/simple-supermarket-diagram.png)
+
+##### Uncompleted tasks
+
+- **BuyOneKgForHalfPrice** : Implementation of buy one kilo for hal price class and discount method using WeighedProduct
