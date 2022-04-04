@@ -51,6 +51,23 @@ class BasketTest {
         );
     }
 
+    @DisplayName("buy one get one free")
+    @MethodSource
+    @ParameterizedTest(name = "{0}")
+    void basketBuyOneGetOneFreeTotal(String description, String expectedTotal, Iterable<Item> items) {
+        final Basket basket = new Basket();
+        basket.addDiscount(new BuyOneGetOneFreeDiscount(new BigDecimal("0.65")));
+        items.forEach(basket::add);
+        assertEquals(new BigDecimal(expectedTotal), basket.total());
+    }
+
+    static Stream<Arguments> basketBuyOneGetOneFreeTotal() {
+        return Stream.of(
+                buyOneGetOneFreeTwoItems(),
+                buyOneGetOneFreeFiveItems()
+        );
+    }
+
     private static Arguments aSingleItemPricedByWeight() {
         return Arguments.of("a single weighed item", "1.25", Collections.singleton(twoFiftyGramsOfAmericanSweets()));
     }
@@ -86,6 +103,16 @@ class BasketTest {
 
     private static Arguments twoForOnePoundFiveItems() {
         return Arguments.of("two for one pound two items five items", "2.65",
+                Arrays.asList(aCanOfBeans(), aCanOfBeans(), aCanOfBeans(), aCanOfBeans(), aCanOfBeans()));
+    }
+
+    private static Arguments buyOneGetOneFreeTwoItems() {
+        return Arguments.of("buy one get one free two items", "0.65",
+                Arrays.asList(aCanOfBeans(), aCanOfBeans()));
+    }
+
+    private static Arguments buyOneGetOneFreeFiveItems() {
+        return Arguments.of("buy one get one free five items", "1.95",
                 Arrays.asList(aCanOfBeans(), aCanOfBeans(), aCanOfBeans(), aCanOfBeans(), aCanOfBeans()));
     }
 
