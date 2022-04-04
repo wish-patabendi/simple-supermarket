@@ -33,6 +33,22 @@ class BasketTest {
         );
     }
 
+    @DisplayName("basket buy two for one pound")
+    @MethodSource
+    @ParameterizedTest(name = "{0}")
+    void basketBuyTwoForOnePoundTotal(String description, String expectedTotal, Iterable<Item> items) {
+        final Basket basket = new Basket();
+        basket.addDiscount(new TwoForOnePoundDiscount(new BigDecimal("0.65")));
+        items.forEach(basket::add);
+        assertEquals(new BigDecimal(expectedTotal), basket.total());
+    }
+
+    static Stream<Arguments> basketBuyTwoForOnePoundTotal() {
+        return Stream.of(
+                twoForOnePoundTwoItems()
+        );
+    }
+
     private static Arguments aSingleItemPricedByWeight() {
         return Arguments.of("a single weighed item", "1.25", Collections.singleton(twoFiftyGramsOfAmericanSweets()));
     }
@@ -56,12 +72,21 @@ class BasketTest {
         return Arguments.of("no items", "0.00", Collections.emptyList());
     }
 
+    private static Arguments twoForOnePoundTwoItems() {
+        return Arguments.of("one product two items priced per unit", "1.00",
+                Arrays.asList(aCanOfBeans(), aCanOfBeans()));
+    }
+
     private static Item aPintOfMilk() {
         return new Product("Milk", new BigDecimal("0.49")).oneOf();
     }
 
     private static Item aPackOfDigestives() {
         return new Product("Digestive", new BigDecimal("1.55")).oneOf();
+    }
+
+    private static Item aCanOfBeans() {
+        return new Product("Beans", new BigDecimal("0.65")).oneOf();
     }
 
     private static WeighedProduct aKiloOfAmericanSweets() {
